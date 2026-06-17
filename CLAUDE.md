@@ -111,6 +111,11 @@ feature/my-change
 - PR to `main` = manual trigger only, represents a QA-approved promotion
 - Treat PR `dev → main` as your QA sign-off gate
 
+**Merge strategy (critical — wrong method causes permanent branch divergence):**
+- `feature/* → dev`: **squash merge** — collapses feature commits into one clean commit on dev
+- `dev → main`: **regular merge (create a merge commit)** — preserves shared commit SHAs so dev and main never diverge after promotion
+- Never squash `dev → main`: squash creates a new SHA on main that dev doesn't have, causing 1-ahead/2-behind divergence on every promotion cycle
+
 ---
 
 ## Environment Configuration
