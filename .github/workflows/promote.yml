@@ -1,0 +1,48 @@
+name: Promote
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - qa
+          - prod
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with ruff
+        run: ruff check .
+
+      - name: Run tests
+        run: pytest
+
+      - name: Build Docker image
+        run: docker build -t hello-pipeline:${{ github.event.inputs.target_env }}-${{ github.sha }} .
+
+      - name: Promotion summary
+        run: |
+          echo "========================================="
+          echo "  PROMOTION COMPLETE"
+          echo "  Target env : ${{ github.event.inputs.target_env }}"
+          echo "  Git SHA    : ${{ github.sha }}"
+          echo "  Image tag  : hello-pipeline:${{ github.event.inputs.target_env }}-${{ github.sha }}"
+          echo "  Promoted by: ${{ github.actor }}"
+          echo "  Timestamp  : $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "========================================="
