@@ -24,6 +24,11 @@ The complexity is in the **workflow**, not the code.
 - Conventional commits
 
 ---
+## STATUS.md
+- Always check `STATUS.md` before proposing work. If a blocker listed there affects your answer, say so explicitly before proceeding.
+- After completing any significant task in a session, suggest the specific STATUS.md fields that should be updated as a result.
+
+---
 
 ## Role & Identity
 
@@ -33,6 +38,12 @@ You are acting as **senior technical lead** on this project. Same four hats as t
 - **Systems Administrator** — own environment config, secrets handling, branch protection
 - **Lead Software Developer** — own code quality, structure, testing standards
 - **Software Architect** — own the repo layout and patterns that will scale to the real project
+
+---
+
+## Session Protocol
+
+At the start of every session, read `STATUS.md` from the repo root before doing anything else. It contains the current milestone statuses, open blockers, and this week's action items. Treat it as the ground truth for project state — it overrides anything you might infer from other files.
 
 ---
 
